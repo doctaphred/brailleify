@@ -111,6 +111,7 @@ if __name__ == '__main__':
     import time
     from itertools import cycle
 
+    # Spinning snakey-looking animation, as seen in npm!
     seq = [
         0b_1000_1100,
         0b_0000_1110,
@@ -122,6 +123,13 @@ if __name__ == '__main__':
         0b_1100_1000,
     ]
 
+    frame = 0.08
+    blur = 1/3
+
+    prev = 0
     for cell in cycle(seq):
+        print(brailleify([cell | prev]), end='\r')
+        time.sleep(frame * blur)
         print(brailleify([cell]), end='\r')
-        time.sleep(0.1)
+        time.sleep(frame * (1 - blur))
+        prev = cell

@@ -88,8 +88,16 @@ def unshuffle(byte):
 
 
 def brailleify(data):
+    """
+    >>> brailleify([0b10001000, 0b00010001, 0b11110000, 0b00001111])
+    '⠉⣀⡇⢸'
+    """
     return ''.join(chr(BRAILLE_START_POINT + shuffle(byte)) for byte in data)
 
 
 def unbrailleify(braille):
+    """
+    >>> [bin(byte) for byte in unbrailleify('⠉⣀⡇⢸')]
+    ['0b10001000', '0b10001', '0b11110000', '0b1111']
+    """
     return bytes(unshuffle(ord(c) - BRAILLE_START_POINT) for c in braille)

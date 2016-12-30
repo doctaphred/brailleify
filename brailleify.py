@@ -95,17 +95,6 @@ def brailleify(data):
     '⠭⣒⡷⢾'
     >>> brailleify([0b_1100_1001, 0b_1001_1100, 0b_1001_0011, 0b_0011_1001])
     '⢋⡙⣡⣌'
-    >>> brailleify([
-    ...     0b_1000_1100,
-    ...     0b_0000_1110,
-    ...     0b_0000_0111,
-    ...     0b_0001_0011,
-    ...     0b_0011_0001,
-    ...     0b_0111_0000,
-    ...     0b_1110_0000,
-    ...     0b_1100_1000,
-    ... ])
-    '⠙⠸⢰⣠⣄⡆⠇⠋'
     """
     return ''.join(chr(BRAILLE_START_POINT + shuffle(byte)) for byte in data)
 
@@ -116,3 +105,23 @@ def unbrailleify(braille):
     ['0b10001000', '0b10001', '0b11110000', '0b1111']
     """
     return bytes(unshuffle(ord(c) - BRAILLE_START_POINT) for c in braille)
+
+
+if __name__ == '__main__':
+    import time
+    from itertools import cycle
+
+    seq = [
+        0b_1000_1100,
+        0b_0000_1110,
+        0b_0000_0111,
+        0b_0001_0011,
+        0b_0011_0001,
+        0b_0111_0000,
+        0b_1110_0000,
+        0b_1100_1000,
+    ]
+
+    for cell in cycle(seq):
+        print(brailleify([cell]), end='\r')
+        time.sleep(0.1)
